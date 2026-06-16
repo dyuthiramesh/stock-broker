@@ -8,8 +8,12 @@ import { SUPPORTED_TICKERS } from './services/priceSimulator';
 export function createApp() {
   const app = express();
 
+  // CORS_ORIGIN can be a comma-separated list, e.g.:
+  //   https://frontend.onrender.com,http://localhost:5173
+  const rawOrigins = process.env.CORS_ORIGIN || 'http://localhost:5173';
+  const corsOrigins = rawOrigins.split(',').map((s) => s.trim()).filter(Boolean);
   app.use(cors({
-    origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+    origin: corsOrigins.length === 1 ? corsOrigins[0] : corsOrigins,
     credentials: true,
   }));
   app.use(express.json());

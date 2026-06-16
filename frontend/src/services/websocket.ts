@@ -23,8 +23,12 @@ export class StockWebSocket {
   connect(): void {
     if (this.ws?.readyState === WebSocket.OPEN) return;
 
-    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-    const wsUrl = `${protocol}//${window.location.host}/ws`;
+    // In production, derive wss:// URL from the backend env var.
+    // In dev, fall back to window.location.host so Vite's /ws proxy is used.
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    const wsUrl = backendUrl
+      ? backendUrl.replace(/^https/, 'wss').replace(/^http$/, 'ws') + '/ws'
+      : `${window.location.protocol === 'https:' ? 'wss:' : 'ws:'}//${window.location.host}/ws`;
     this.ws = new WebSocket(wsUrl);
 
     this.ws.onopen = () => {

@@ -1,4 +1,6 @@
-const BASE_URL = '/api';
+// In dev, VITE_BACKEND_URL is unset and Vite proxies /api → localhost:3001.
+// In production, set VITE_BACKEND_URL=https://your-backend.onrender.com
+const BASE_URL = `${import.meta.env.VITE_BACKEND_URL ?? ''}/api`;
 
 async function request<T>(path: string, options?: RequestInit): Promise<T> {
   const res = await fetch(`${BASE_URL}${path}`, {
