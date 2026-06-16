@@ -1,5 +1,7 @@
 # Stock Broker Client Web Dashboard
 
+Deployed link: https://stock-broker-site.onrender.com/
+
 A real-time stock price dashboard. Users log in with their email, subscribe to stock tickers, and watch prices update live every second — no page refresh required. Multiple users can run independent dashboards simultaneously with different subscriptions.
 
 ---
